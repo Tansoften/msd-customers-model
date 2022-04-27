@@ -1,18 +1,19 @@
 package com.tansoften.msd;
 
+import com.tansoften.msd.data.Customer;
 import net.minidev.json.JSONArray;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.boot.SpringApplication;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MSDMainApplication {
-<<<<<<< HEAD
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONArray data;
+
     public static void main(String[] args) {
             MSDMainApplication msdMainApplication = new MSDMainApplication();
             msdMainApplication.read_json();
@@ -24,14 +25,9 @@ public class MSDMainApplication {
             Customer customer = new Customer();
             customer.setId(datum.get("id"));
         }
-=======
-    public static void main(String[] args) {
-            MSDMainApplication msdMainApplication = new MSDMainApplication();
-            msdMainApplication.read_json();
->>>>>>> c8d4a13f8ffc363432162155d261c8cb0ed6065d
     }
 
-    private JSONArray read_json() {
+    private void read_json() {
         JSONParser jsonParser = new JSONParser();
         try {
             FileReader reader = new FileReader("src/main/java/com/tansoften/msd/consumption_facts.json");
