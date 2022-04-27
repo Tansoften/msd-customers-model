@@ -8,9 +8,6 @@ public class MsdApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MsdApplication.class, args);
-		System.out.println("Test ");
-		System.out.println("Test ");
-		System.out.println("Test ");
 	}
 
 }
