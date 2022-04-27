@@ -1,5 +1,7 @@
 package com.tansoften.msd.data;
 
+import java.util.ArrayList;
+
 public class Customer {
    private int id;
 
