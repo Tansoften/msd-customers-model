@@ -13,22 +13,27 @@ import java.util.ArrayList;
 
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
+    private JSONArray data;
     public static void main(String[] args) {
             MSDMainApplication msdMainApplication = new MSDMainApplication();
             msdMainApplication.read_json();
-        for(datum:data) {
+            msdMainApplication.loadTree();
+    }
+
+    private void loadTree(){
+         for(datum:data) {
             Customer customer = new Customer();
             customer.setId(datum.get("id"));
         }
     }
 
-    private void read_json() {
+    private JSONArray read_json() {
         JSONParser jsonParser = new JSONParser();
         try {
             FileReader reader = new FileReader("src/main/java/com/tansoften/msd/consumption_facts.json");
             Object jsonObject = jsonParser.parse(reader);
             JSONArray consumptionList = (JSONArray) jsonObject;
-            System.out.println(consumptionList);
+            data = consumptionList;
         } catch ( FileNotFoundException e ) {
             throw new RuntimeException(e);
         } catch ( ParseException e ) {
