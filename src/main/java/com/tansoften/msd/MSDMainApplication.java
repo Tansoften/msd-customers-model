@@ -2,6 +2,7 @@ package com.tansoften.msd;
 
 import com.tansoften.msd.data.Customer;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
-    private JSONArray data;
+    private JSONObject data;
 
     public static void main(String[] args) {
             MSDMainApplication msdMainApplication = new MSDMainApplication();
@@ -21,9 +22,11 @@ public class MSDMainApplication {
     }
 
     private void loadTree(){
-         for(datum:data) {
+        JSONArray dataArray = (JSONArray) data.get("data");
+         for(int index=0; index < dataArray.size(); ++index) {
+            JSONObject data = (JSONObject) dataArray.get(index);
             Customer customer = new Customer();
-            customer.setId(datum.get("id"));
+            customer.setId((Integer) data.get("id"));
         }
     }
 
@@ -33,7 +36,7 @@ public class MSDMainApplication {
             FileReader reader = new FileReader("src/main/java/com/tansoften/msd/consumption_facts.json");
             Object jsonObject = jsonParser.parse(reader);
             JSONArray consumptionList = (JSONArray) jsonObject;
-            data = consumptionList;
+            data = (JSONObject) consumptionList.get(2);
         } catch ( FileNotFoundException e ) {
             throw new RuntimeException(e);
         } catch ( ParseException e ) {
