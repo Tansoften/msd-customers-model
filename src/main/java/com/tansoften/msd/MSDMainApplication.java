@@ -1,32 +1,34 @@
 package com.tansoften.msd;
 
+
 import com.tansoften.msd.data.Customer;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
-import org.springframework.boot.SpringApplication;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONObject data;
 
     public static void main(String[] args) {
-            MSDMainApplication msdMainApplication = new MSDMainApplication();
-            msdMainApplication.read_json();
-            msdMainApplication.loadTree();
+        MSDMainApplication msdMainApplication = new MSDMainApplication();
+        msdMainApplication.read_json();
+        msdMainApplication.loadTree();
     }
 
     private void loadTree(){
         JSONArray dataArray = (JSONArray) data.get("data");
+
          for(int index=0; index < dataArray.size(); ++index) {
             JSONObject data = (JSONObject) dataArray.get(index);
-            Customer customer = new Customer();
-            customer.setId((Integer) data.get("id"));
+            Customer customer = new Customer((Integer) data.get("id"));
+            customer.setProduct((String) data.get("product_id"), (String) data.get("date"), (Integer) data.get("quantity"));
         }
     }
 
@@ -39,8 +41,9 @@ public class MSDMainApplication {
             data = (JSONObject) consumptionList.get(2);
         } catch ( FileNotFoundException e ) {
             throw new RuntimeException(e);
-        } catch ( ParseException e ) {
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

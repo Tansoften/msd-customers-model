@@ -1,13 +1,17 @@
 package com.tansoften.msd.data;
 
 public class Product {
-   private int id;
+   private String id;
 
-    public int getId() {
+    public Product(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
