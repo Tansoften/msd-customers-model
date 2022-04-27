@@ -1,17 +1,16 @@
 package com.tansoften.msd;
 
-import com.tansoften.msd.data.Customer;
-import org.springframework.boot.SpringApplication;
 import net.minidev.json.JSONArray;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.boot.SpringApplication;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class MSDMainApplication {
+<<<<<<< HEAD
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONArray data;
     public static void main(String[] args) {
@@ -25,6 +24,11 @@ public class MSDMainApplication {
             Customer customer = new Customer();
             customer.setId(datum.get("id"));
         }
+=======
+    public static void main(String[] args) {
+            MSDMainApplication msdMainApplication = new MSDMainApplication();
+            msdMainApplication.read_json();
+>>>>>>> c8d4a13f8ffc363432162155d261c8cb0ed6065d
     }
 
     private JSONArray read_json() {
