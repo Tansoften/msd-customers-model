@@ -3,7 +3,7 @@ package com.tansoften.msd;
 import com.tansoften.msd.data.Consumption;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -22,7 +22,7 @@ public final class ModelTesting {
         try {
             int mean = total.get() / size;
             return mean;
-        } catch (Exception exc) {
+        } catch ( Exception exc ) {
             return STATUS.ZERO_DIVIDE.ordinal();
         }
     }
@@ -75,26 +75,37 @@ public final class ModelTesting {
         return standardDeviation;
     }
 
-    public static double getSumOfThreeNo(ArrayList<Consumption> consumptions) {
-       // ArrayList<Consumption> newList = new ArrayList<>();
-        int[] newList = new int[consumptions.size()];
-        int sum;
-        ArrayList<Consumption> newConsumptions = consumptions;
-       AtomicInteger count = new AtomicInteger();
-        newConsumptions.forEach(item -> {
-                newList[0] =item.getQuantity();
-                count.getAndIncrement();
-        });
-
-        for(int i= 0; i<newList.length; i++){
-            for(int j= 1; j<newList.length; j++){
-                if(newList[i]<newList[j]){
-                    newList[j] = newList[i];
+    public static int getSumOfThreeNo(ArrayList<Consumption> consumptions) {
+        ArrayList<Integer> list = new ArrayList<>();
+        consumptions.forEach(item -> list.add(item.getQuantity()));
+        Integer[] newList = list.toArray(new Integer[0]);
+        for (int i = 0; i < newList.length; i++) {
+            for (int j = 1; j < newList.length; j++) {
+                int swap;
+                if (newList[j - 1] < newList[j]) {
+                    swap = newList[j - 1];
+                    newList[j - 1] = newList[j];
+                    newList[j] = swap;
                 }
             }
         }
-        int[] arr= Arrays.copyOfRange(newList, newList.length-3, newList.length);
+        double firstNumbersCount = Math.ceil(newList.length * 0.4);
+        double sum = 0;
+        for (int i = 0; i < firstNumbersCount; i++) {
+            sum = sum + newList[i];
+        }
+        return (int) Math.ceil(sum / firstNumbersCount);
+    }
 
-        return Arrays.stream(arr).sum()/3;
+    public static int getRandomGhost(ArrayList<Consumption> consumptions){
+        ArrayList<Integer> list = new ArrayList<>();
+        consumptions.forEach(item->{
+            list.add(item.getQuantity());
+        });
+        Integer[] listArray = list.toArray(new Integer[0]);
+        int max = listArray.length;
+        Random random = new Random();
+        int index = random.nextInt(max);
+        return listArray[index];
     }
 }
