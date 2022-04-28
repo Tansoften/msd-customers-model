@@ -18,9 +18,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONObject data;
-    MSDMainApplication msdMainApplication;
+    MSDMainApplication msdMainApplication= new MSDMainApplication();
     public MSDMainApplication() {
-        msdMainApplication = new MSDMainApplication();
+        //msdMainApplication ;
         msdMainApplication.loadTree();
         msdMainApplication.loadAndTest();
         System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses());

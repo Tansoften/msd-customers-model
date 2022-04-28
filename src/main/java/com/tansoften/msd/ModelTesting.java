@@ -105,4 +105,19 @@ public final class ModelTesting {
         int index = random.nextInt(max);
         return listArray[index];
     }
+
+    public static int getGeometricMean(ArrayList<Consumption> consumptions){
+        ArrayList<Integer> list = new ArrayList<>();
+        int sum = 0;
+        double gMean = 0;
+        consumptions.forEach(item->{
+            list.add(item.getQuantity());
+        });
+        Integer[] newList = list.toArray(new Integer[0]);
+        for (Integer i: newList){
+            sum+=i;
+        }
+        gMean = Math.pow(sum,(1/newList.length));
+        return (int) Math.ceil(gMean);
+    }
 }
