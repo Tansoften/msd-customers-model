@@ -18,14 +18,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONObject data;
-
-    public static void main(String[] args) {
-
-        MSDMainApplication msdMainApplication = new MSDMainApplication();
+    MSDMainApplication msdMainApplication;
+    public MSDMainApplication() {
+        msdMainApplication = new MSDMainApplication();
         msdMainApplication.loadTree();
         msdMainApplication.loadAndTest();
         System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses());
     }
+
+
 
     private void loadAndTest(){
         JSONObject testingData = read_json("testing.json");
@@ -70,13 +71,15 @@ public class MSDMainApplication {
         return futureConsumption.get();
     }
 
-    public void traverse(int customer, String productId, int month){
+    public int traverse(int customer, String productId, int month){
+        AtomicInteger futureConsumption = new AtomicInteger();
         root.forEach(item->{
             if(item.getId() == customer){
                 item.findProduct(productId, month);
             }
         });
-
+        System.out.println(futureConsumption.get());
+        return futureConsumption.get();
     }
 
     private void loadTree(){

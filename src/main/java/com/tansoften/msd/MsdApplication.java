@@ -8,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MsdApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsdApplication.class, args);
-
+		MSDMainApplication msdMainApplication = new MSDMainApplication();
 	}
 }

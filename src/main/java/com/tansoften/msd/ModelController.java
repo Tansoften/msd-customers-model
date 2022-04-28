@@ -2,31 +2,27 @@ package com.tansoften.msd;
 
 import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-//@CrossOrigin("http://localhost:8000/")
+import java.util.Map;
+
+@RestController
+@CrossOrigin("http://localhost:8000/")
 public class ModelController {
-    //@RequestMapping(value = "/model", method = RequestMethod.POST)
-    //public ResponseEntity<?> getConsumption(@RequestBody Map<String, Object> order){
-    @GetMapping("/model")
+    //@RequestMapping(value = "/model/product_usage", method = RequestMethod.POST)
+    //public ResponseEntity<?> getConsumption(@RequestBody Map<String, Object> product_order)
+    @GetMapping("/model/product_usage")
     public ResponseEntity<?> getConsumption(){
-        int customer = 1;
-        //int customer = order.get("customer_id");
-        String product = "01102301";
-        int month = 2;
-        JSONObject jsonObject = new  JSONObject();
-        jsonObject.put("product_id","1010101");
-        jsonObject.put("customer_id",1);
-        jsonObject.put("quantity",200);
+//        int customer = (int) product_order.get("customer_id");
+//        String product = (String) product_order.get("product_id");
+//        int month = (int) product_order.get("month");
+        JSONObject product_usage = new  JSONObject();
         MSDMainApplication msdMainApplication = new MSDMainApplication();
         //receiving response from the Model
-        msdMainApplication.traverse(customer,product,month);
+       int usage =  msdMainApplication.traverse(1,"01102301",2);
+       product_usage.put("product_usage",usage);
         //returning response to the client
-        return ResponseEntity.ok(jsonObject);
+        return ResponseEntity.ok(product_usage);
     }
 
 }
