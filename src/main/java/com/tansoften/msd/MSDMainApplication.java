@@ -17,7 +17,7 @@ public class MSDMainApplication {
     public static void main(String[] args) {
             MSDMainApplication msdMainApplication = new MSDMainApplication();
             msdMainApplication.read_json();
-            msdMainApplication.loadTree();
+           // msdMainApplication.loadTree();
     }
 
     private void loadTree(){
