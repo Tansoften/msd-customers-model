@@ -1,5 +1,6 @@
 package com.tansoften.msd.data;
 
+import com.tansoften.msd.ModelTesting;
 import com.tansoften.msd.STATUS;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Months {
         })).toList();
 
         try{
+            ModelTesting.calculateStandardDeviation(consumptions);
             int mean = total.get() /consumptions.size();
             return mean;
         }catch (Exception exc){
