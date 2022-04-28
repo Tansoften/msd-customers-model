@@ -11,8 +11,12 @@ public final class ModelTesting {
     private static int wins = 0;
     private static int loses = 0;
     private static Double winRate;
-
+    private static ArrayList<Occurences> mode;
     private static double standardDeviation = 0.0;
+
+//    public static int findMode(){
+//
+//    }
 
     public static int findMean(AtomicInteger total, int size) {
         try {

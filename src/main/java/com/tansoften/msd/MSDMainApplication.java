@@ -1,6 +1,5 @@
 package com.tansoften.msd;
 
-
 import com.tansoften.msd.data.Customer;
 import com.tansoften.msd.data.Date;
 import net.minidev.json.JSONArray;
@@ -13,7 +12,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
@@ -28,7 +26,7 @@ public class MSDMainApplication {
     }
 
     private void loadAndTest(){
-        JSONObject testingData = read_json("testing.json");
+        JSONObject testingData = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
@@ -44,8 +42,8 @@ public class MSDMainApplication {
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
-            }//(futureConsumption-std) && quantity <= (futureConsumption+std)
-            else if(quantity == futureConsumption){
+            }
+            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
@@ -79,7 +77,7 @@ public class MSDMainApplication {
     }
 
     private void loadTree(){
-        data = read_json("training.json");
+        data = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
