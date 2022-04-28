@@ -28,7 +28,7 @@ public class MSDMainApplication {
     }
 
     private void loadAndTest(){
-        JSONObject testingData = read_json("testing.json");
+        JSONObject testingData = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
@@ -72,7 +72,7 @@ public class MSDMainApplication {
     }
 
     private void loadTree(){
-        data = read_json("training.json");
+        data = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {

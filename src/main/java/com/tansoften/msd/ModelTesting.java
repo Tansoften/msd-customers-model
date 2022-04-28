@@ -3,6 +3,7 @@ package com.tansoften.msd;
 import com.tansoften.msd.data.Consumption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -13,16 +14,16 @@ public final class ModelTesting {
 
     private static double standardDeviation = 0.0;
 
-    public static int findMean(AtomicInteger total, int size){
-        try{
-            int mean = total.get() /size;
+    public static int findMean(AtomicInteger total, int size) {
+        try {
+            int mean = total.get() / size;
             return mean;
-        }catch (Exception exc){
+        } catch (Exception exc) {
             return STATUS.ZERO_DIVIDE.ordinal();
         }
     }
 
-    public static void addWins(){
+    public static void addWins() {
         ++wins;
     }
 
@@ -42,7 +43,7 @@ public final class ModelTesting {
         try {
             winRate = Double.valueOf(Double.valueOf(wins) / (Double.valueOf(loses) + Double.valueOf(wins)));
             System.out.println(wins / (loses + wins));
-        } catch ( Exception exc ) {
+        } catch (Exception exc) {
             System.out.println(exc);
         }
 
@@ -52,7 +53,7 @@ public final class ModelTesting {
     public static void calculateStandardDeviation(ArrayList<Consumption> list) {
         AtomicInteger sum = new AtomicInteger();
         AtomicInteger mean = new AtomicInteger(0);
-        AtomicReference<Double> variance= new AtomicReference<>(0.0);
+        AtomicReference<Double> variance = new AtomicReference<>(0.0);
         list.forEach(item -> {
             sum.addAndGet(item.getQuantity());
         });
@@ -69,5 +70,28 @@ public final class ModelTesting {
 
     public static double getStandardDeviation() {
         return standardDeviation;
+    }
+
+    public static double getSumOfThreeNo(ArrayList<Consumption> consumptions) {
+       // ArrayList<Consumption> newList = new ArrayList<>();
+        int[] newList = new int[consumptions.size()];
+        int sum;
+        ArrayList<Consumption> newConsumptions = consumptions;
+       AtomicInteger count = new AtomicInteger();
+        newConsumptions.forEach(item -> {
+                newList[0] =item.getQuantity();
+                count.getAndIncrement();
+        });
+
+        for(int i= 0; i<newList.length; i++){
+            for(int j= 1; j<newList.length; j++){
+                if(newList[i]<newList[j]){
+                    newList[j] = newList[i];
+                }
+            }
+        }
+        int[] arr= Arrays.copyOfRange(newList, newList.length-3, newList.length);
+
+        return Arrays.stream(arr).sum()/3;
     }
 }
