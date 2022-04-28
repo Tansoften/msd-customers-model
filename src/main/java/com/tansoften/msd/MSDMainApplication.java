@@ -11,6 +11,8 @@ import net.minidev.json.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MSDMainApplication {
@@ -21,7 +23,24 @@ public class MSDMainApplication {
         MSDMainApplication msdMainApplication = new MSDMainApplication();
         msdMainApplication.read_json();
         msdMainApplication.loadTree();
-        msdMainApplication.traverse(1, "00000802", 1);
+        msdMainApplication.testForecast(1, "00000802", 9);
+        //System.out.println(msdMainApplication.root.size());
+    }
+
+    private void testForecast(int customerId, String productId, int month){
+        int forecastNo = getForecast(customerId, productId, month);
+        System.out.println(forecastNo);
+    }
+
+    private int getForecast(int customer, String productId, int month){
+        AtomicInteger futureConsumption = new AtomicInteger();
+        root.forEach(item->{
+            if(item.getId() == customer){
+                futureConsumption.set(item.findProduct(productId, month));
+            }
+        });
+
+        return futureConsumption.get();
     }
 
     private void traverse(int customer, String productId, int month){
@@ -36,10 +55,25 @@ public class MSDMainApplication {
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
-            JSONObject data = (JSONObject) dataArray.get(index);
-            Customer customer = new Customer(Integer.parseInt((String) data.get("customer_id")) );
-            Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
-            customer.setProduct((String) data.get("product_id"), date, Integer.parseInt((String) data.get("quantity")));
+             JSONObject data = (JSONObject) dataArray.get(index);
+             int customerId = Integer.parseInt((String) data.get("customer_id"));
+             String productId = (String) data.get("product_id");
+             int quantity = Integer.parseInt((String) data.get("quantity"));
+             AtomicBoolean hasFound = new AtomicBoolean(false);
+             Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
+
+             root.forEach(itemCustomer -> {
+                if(itemCustomer.getId() == customerId){
+                    itemCustomer.setProduct(productId, date, quantity);
+                    hasFound.set(true);
+                }
+            });
+
+            if(!hasFound.get()){
+                Customer customer = new Customer(customerId);
+                customer.setProduct(productId, date, quantity);
+                root.add(customer);
+            }
         }
     }
 

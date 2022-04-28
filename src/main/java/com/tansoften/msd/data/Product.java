@@ -15,21 +15,24 @@ public class Product {
    private Months november  = new Months(11);
    private Months december  = new Months(12);
 
-   public void findMonth(int mon){
+   public int findMonth(int mon){
+       int quantity = 0;
        switch (mon){
-           case 1   -> january.findCons();
-//           case 2   -> february.setConsumptions(date.getYear(), quantity);
-//           case 3   -> march.setConsumptions(date.getYear(), quantity);
-//           case 4   -> april.setConsumptions(date.getYear(), quantity);
-//           case 5   -> may.setConsumptions(date.getYear(), quantity);
-//           case 6   -> june.setConsumptions(date.getYear(), quantity);
-//           case 7   -> july.setConsumptions(date.getYear(), quantity);
-//           case 8   -> august.setConsumptions(date.getYear(), quantity);
-//           case 9   -> september.setConsumptions(date.getYear(), quantity);
-//           case 10  -> october.setConsumptions(date.getYear(), quantity);
-//           case 11  -> november.setConsumptions(date.getYear(), quantity);
-//           case 12  -> december.setConsumptions(date.getYear(), quantity);
+           case 1   -> quantity = january.determineConsumption();
+           case 2   -> quantity = february.determineConsumption();
+           case 3   -> quantity = march.determineConsumption();
+           case 4   -> quantity = april.determineConsumption();
+           case 5   -> quantity = may.determineConsumption();
+           case 6   -> quantity = june.determineConsumption();
+           case 7   -> quantity = july.determineConsumption();
+           case 8   -> quantity = august.determineConsumption();
+           case 9   -> quantity = september.determineConsumption();
+           case 10  -> quantity = october.determineConsumption();
+           case 11  -> quantity = november.determineConsumption();
+           case 12  -> quantity = december.determineConsumption();
        }
+
+       return quantity;
    }
 
    public void passMonth(Date date, int quantity){
