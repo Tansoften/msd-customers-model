@@ -2,6 +2,7 @@ package com.tansoften.msd;
 
 
 import com.tansoften.msd.data.Customer;
+import com.tansoften.msd.data.Date;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -20,6 +21,15 @@ public class MSDMainApplication {
         MSDMainApplication msdMainApplication = new MSDMainApplication();
         msdMainApplication.read_json();
         msdMainApplication.loadTree();
+        msdMainApplication.traverse(1, "00000802", 1);
+    }
+
+    private void traverse(int customer, String productId, int month){
+        root.forEach(item->{
+            if(item.getId() == customer){
+                item.findProduct(productId, month);
+            }
+        });
     }
 
     private void loadTree(){
@@ -27,8 +37,9 @@ public class MSDMainApplication {
 
          for(int index=0; index < dataArray.size(); ++index) {
             JSONObject data = (JSONObject) dataArray.get(index);
-            Customer customer = new Customer((Integer) data.get("id"));
-            customer.setProduct((String) data.get("product_id"), (String) data.get("date"), (Integer) data.get("quantity"));
+            Customer customer = new Customer(Integer.parseInt((String) data.get("customer_id")) );
+            Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
+            customer.setProduct((String) data.get("product_id"), date, Integer.parseInt((String) data.get("quantity")));
         }
     }
 
