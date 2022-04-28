@@ -22,13 +22,12 @@ public class Months {
         })).toList();
 
         try{
-            ModelTesting.calculateStandardDeviation(consumptions);
-            int mean = total.get() /consumptions.size();
-            return mean;
+           ModelTesting.calculateStandardDeviation(consumptions);
+
+            return ModelTesting.findMean(total, consumptions.size());
         }catch (Exception exc){
             return STATUS.ZERO_DIVIDE.ordinal();
         }
-        return ModelTesting.findMean(total, consumptions.size());
     }
 
     public void setConsumptions(int year, int quantity) {

@@ -35,10 +35,11 @@ public class MSDMainApplication {
             JSONObject data = (JSONObject) dataArray.get(index);
             int quantity = Integer.parseInt((String) data.get("quantity"));
             int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
+            Double std = ModelTesting.getStandardDeviation();
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
             }
-            else if(quantity == futureConsumption){
+            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
