@@ -43,8 +43,7 @@ public final class ModelTesting {
     public static Double getWinRate() {
         try {
             winRate = Double.valueOf(Double.valueOf(wins) / (Double.valueOf(loses) + Double.valueOf(wins)));
-            System.out.println(wins / (loses + wins));
-        } catch ( Exception exc ) {
+        } catch (Exception exc) {
             System.out.println(exc);
         }
 

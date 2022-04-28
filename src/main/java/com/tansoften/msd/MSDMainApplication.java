@@ -33,16 +33,23 @@ public class MSDMainApplication {
 
         for(int index = 0; index < dataArray.size(); ++index){
             JSONObject data = (JSONObject) dataArray.get(index);
+
+            int customerId = Integer.parseInt((String) data.get("customer_id"));
+            String productId = (String) data.get("product_id");
             int quantity = Integer.parseInt((String) data.get("quantity"));
+
+            Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
             int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
             Double std = ModelTesting.getStandardDeviation();
+
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
-            }
-            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
+            }//(futureConsumption-std) && quantity <= (futureConsumption+std)
+            else if(quantity == futureConsumption){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
+                feedConsumption(customerId, productId, date, quantity);
             }
         }
     }
@@ -81,21 +88,26 @@ public class MSDMainApplication {
              int customerId = Integer.parseInt((String) data.get("customer_id"));
              String productId = (String) data.get("product_id");
              int quantity = Integer.parseInt((String) data.get("quantity"));
-             AtomicBoolean hasFound = new AtomicBoolean(false);
+
              Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
 
-             root.forEach(itemCustomer -> {
-                if(itemCustomer.getId() == customerId){
-                    itemCustomer.setProduct(productId, date, quantity);
-                    hasFound.set(true);
-                }
-            });
+             feedConsumption(customerId, productId, date, quantity);
+        }
+    }
 
-            if(!hasFound.get()){
-                Customer customer = new Customer(customerId);
-                customer.setProduct(productId, date, quantity);
-                root.add(customer);
+    private void feedConsumption(int customerId, String productId, Date date, int quantity){
+        AtomicBoolean hasFound = new AtomicBoolean(false);
+        root.forEach(itemCustomer -> {
+            if(itemCustomer.getId() == customerId){
+                itemCustomer.setProduct(productId, date, quantity);
+                hasFound.set(true);
             }
+        });
+
+        if(!hasFound.get()){
+            Customer customer = new Customer(customerId);
+            customer.setProduct(productId, date, quantity);
+            root.add(customer);
         }
     }
 
