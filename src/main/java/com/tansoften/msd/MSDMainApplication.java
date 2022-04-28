@@ -21,15 +21,33 @@ public class MSDMainApplication {
 
     public static void main(String[] args) {
         MSDMainApplication msdMainApplication = new MSDMainApplication();
-        msdMainApplication.read_json();
         msdMainApplication.loadTree();
-        msdMainApplication.testForecast(1, "00000802", 9);
-        //System.out.println(msdMainApplication.root.size());
+        msdMainApplication.loadAndTest();
+        System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses());
     }
 
-    private void testForecast(int customerId, String productId, int month){
+    private void loadAndTest(){
+        JSONObject testingData = read_json("testing.json");
+        JSONArray dataArray = (JSONArray) testingData.get("data");
+
+        for(int index = 0; index < dataArray.size(); ++index){
+            JSONObject data = (JSONObject) dataArray.get(index);
+            int quantity = Integer.parseInt((String) data.get("quantity"));
+            int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
+            if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
+                System.out.println("skipped");
+            }
+            else if(quantity == futureConsumption){
+                ModelTesting.addWins();
+            }else{
+                ModelTesting.addLoses();
+            }
+        }
+    }
+
+    private int testForecast(int customerId, String productId, int month){
         int forecastNo = getForecast(customerId, productId, month);
-        System.out.println(forecastNo);
+        return forecastNo;
     }
 
     private int getForecast(int customer, String productId, int month){
@@ -52,6 +70,7 @@ public class MSDMainApplication {
     }
 
     private void loadTree(){
+        data = read_json("training.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
@@ -77,18 +96,17 @@ public class MSDMainApplication {
         }
     }
 
-    private void read_json() {
+    private JSONObject read_json(String fileName) {
         JSONParser jsonParser = new JSONParser();
         try {
-            FileReader reader = new FileReader("src/main/java/com/tansoften/msd/consumption_facts.json");
+            FileReader reader = new FileReader("src/main/java/com/tansoften/msd/"+fileName);
             Object jsonObject = jsonParser.parse(reader);
             JSONArray consumptionList = (JSONArray) jsonObject;
-            data = (JSONObject) consumptionList.get(2);
+            return (JSONObject) consumptionList.get(2);
         } catch ( FileNotFoundException e ) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

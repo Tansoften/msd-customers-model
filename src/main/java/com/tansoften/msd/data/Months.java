@@ -1,5 +1,7 @@
 package com.tansoften.msd.data;
 
+import com.tansoften.msd.STATUS;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,7 +19,13 @@ public class Months {
             total.addAndGet(consumption.getQuantity());
             return null;
         })).toList();
-        return total.get() /consumptions.size();
+
+        try{
+            int mean = total.get() /consumptions.size();
+            return mean;
+        }catch (Exception exc){
+            return STATUS.ZERO_DIVIDE.ordinal();
+        }
     }
 
     public void setConsumptions(int year, int quantity) {

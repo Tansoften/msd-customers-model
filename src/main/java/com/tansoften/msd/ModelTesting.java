@@ -11,9 +11,13 @@ public final class ModelTesting {
     public static void addLoses(){
         ++loses;
     }
+
+    public static int getWins(){return wins;}
+    public static int getLoses(){return loses;}
+
     public static Double getWinRate(){
         try{
-            winRate = Double.valueOf(wins/loses);
+            winRate = Double.valueOf(wins/(loses+wins));
         }catch (Exception exc){
             System.out.println(exc);
         }
