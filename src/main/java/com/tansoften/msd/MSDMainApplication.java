@@ -18,11 +18,7 @@ public class MSDMainApplication {
     private JSONObject data;
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-            MSDMainApplication msdMainApplication = new MSDMainApplication();
-            msdMainApplication.read_json();
-           // msdMainApplication.loadTree();
-=======
+
         MSDMainApplication msdMainApplication = new MSDMainApplication();
         msdMainApplication.read_json();
         msdMainApplication.loadTree();
@@ -35,7 +31,6 @@ public class MSDMainApplication {
                 item.findProduct(productId, month);
             }
         });
->>>>>>> 0a47fedc6da4840439578786154b63bbb737336b
     }
 
     private void loadTree(){
