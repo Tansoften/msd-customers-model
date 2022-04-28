@@ -13,6 +13,16 @@ public final class ModelTesting {
     private static double standardDeviation = 0.0;
 
     public static void addWins() {
+    public static int findMean(AtomicInteger total, int size){
+        try{
+            int mean = total.get() /size;
+            return mean;
+        }catch (Exception exc){
+            return STATUS.ZERO_DIVIDE.ordinal();
+        }
+    }
+
+    public static void addWins(){
         ++wins;
     }
 
