@@ -28,17 +28,18 @@ public class MSDMainApplication {
     }
 
     private void loadAndTest(){
-        JSONObject testingData = read_json("testing.json");
+        JSONObject testingData = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
             JSONObject data = (JSONObject) dataArray.get(index);
             int quantity = Integer.parseInt((String) data.get("quantity"));
             int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
+            Double std = ModelTesting.getStandardDeviation();
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
             }
-            else if(quantity == futureConsumption){
+            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
@@ -71,7 +72,7 @@ public class MSDMainApplication {
     }
 
     private void loadTree(){
-        data = read_json("training.json");
+        data = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
