@@ -16,6 +16,20 @@ public final class ModelTesting {
 
     private static double mean = 0;
 
+    private static int max = 0;
+
+    private  static int min = 0;
+    public static void setMax(int max) {
+        ModelTesting.max = max;
+    }
+
+    public static void setMin(int min) {
+        ModelTesting.min = min;
+    }
+
+
+
+
     public static void setMean(double mean) {
         ModelTesting.mean = mean;
     }
@@ -30,6 +44,7 @@ public final class ModelTesting {
     public static int findMean(AtomicInteger total, int size) {
         try {
             int mean = total.get() / size;
+            setMean(mean);
             return mean;
         } catch ( Exception exc ) {
             return STATUS.ZERO_DIVIDE.ordinal();
@@ -63,15 +78,7 @@ public final class ModelTesting {
     }
 
     public static void calculateStandardDeviation(ArrayList<Consumption> list) {
-        AtomicInteger sum = new AtomicInteger();
-        AtomicInteger mean = new AtomicInteger(0);
         AtomicReference<Double> variance = new AtomicReference<>(0.0);
-        list.forEach(item -> {
-            sum.addAndGet(item.getQuantity());
-        });
-
-        mean.set(sum.get() / (list.size()));
-
         list.forEach(item -> {
             double dif = item.getQuantity() - getMean();
             variance.set(variance.get() + Math.pow(dif, 2.0));
@@ -115,7 +122,7 @@ public final class ModelTesting {
         int max = listArray.length;
         Random random = new Random();
         int index = random.nextInt(max);
-        return listArray[index];
+        return listArray[index-1];
     }
 
     public static int getGeometricMean(ArrayList<Consumption> consumptions){
