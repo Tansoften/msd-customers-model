@@ -25,7 +25,7 @@ public class Months {
 
 
         try{
-           ModelTesting.calculateStandardDeviation(consumptions);
+           //ModelTesting.calculateStandardDeviation(consumptions);
            //return ModelTesting.getSumOfThreeNo(consumptions);
            //return ModelTesting.getRandomGhost(consumptions);
             //return ModelTesting.getMedianConsumption(consumptions);
