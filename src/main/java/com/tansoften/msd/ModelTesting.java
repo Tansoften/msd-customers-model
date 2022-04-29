@@ -29,6 +29,15 @@ public final class ModelTesting {
 
         return mean;
     }
+    private static double mean = 0;
+
+    public static void setMean(double mean) {
+        ModelTesting.mean = mean;
+    }
+
+    public static double getMean() {
+        return mean;
+    }
 
     public static int findMean(AtomicInteger total, int size) {
         try {
@@ -82,7 +91,7 @@ public final class ModelTesting {
         mean.set(sum.get() / (list.size()));
 
         list.forEach(item -> {
-            double dif = item.getQuantity() - mean.get();
+            double dif = item.getQuantity() - getMean();
             variance.set(variance.get() + Math.pow(dif, 2.0));
         });
 
@@ -139,6 +148,8 @@ public final class ModelTesting {
             sum+=i;
         }
         gMean = Math.pow(sum,(1/newList.length));
+        setMean(gMean);
+        ModelTesting.calculateStandardDeviation(consumptions);
         return (int) Math.ceil(gMean);
     }
     public static int getLatestConsumption(ArrayList<Consumption> consumptions){

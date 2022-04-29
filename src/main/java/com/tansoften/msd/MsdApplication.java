@@ -8,13 +8,10 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class MsdApplication {
-	public static void main(String[] args) throws IOException {
-//		Runtime runtime = Runtime.getRuntime();
-//		Process process = runtime.exec("cmd ");
+	public static void main(String[] args){
 		//SpringApplication.run(MsdApplication.class, args);
 		MSDMainApplication msdMainApplication = new MSDMainApplication();
 		msdMainApplication.loadTree();
-		//System.out.println(msdMainApplication.getForecast(1, "00000802", 1));
 		msdMainApplication.loadAndTest();
 		System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses()+"\nNew consumptions learned: "+ModelTesting.getConsumptionsLearned());
 	}
