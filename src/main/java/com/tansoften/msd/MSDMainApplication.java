@@ -18,7 +18,7 @@ public class MSDMainApplication {
     private JSONObject data;
 
     public void loadAndTest(){
-        JSONObject testingData = read_json("data-set.json");
+        JSONObject testingData = read_json("testing.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
@@ -35,7 +35,7 @@ public class MSDMainApplication {
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
             }
-            else if(quantity >= (futureConsumption-ModelTesting.getMedian_margin()) && quantity <= (futureConsumption+ModelTesting.getMedian_margin())){
+            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
@@ -73,7 +73,7 @@ public class MSDMainApplication {
     }
 
     public void loadTree(){
-        data = read_json("data-set.json");
+        data = read_json("training.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
