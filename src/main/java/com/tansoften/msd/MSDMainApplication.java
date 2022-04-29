@@ -1,6 +1,5 @@
 package com.tansoften.msd;
 
-
 import com.tansoften.msd.data.Customer;
 import com.tansoften.msd.data.Date;
 import net.minidev.json.JSONArray;
@@ -14,22 +13,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONObject data;
-    MSDMainApplication msdMainApplication= new MSDMainApplication();
-    public MSDMainApplication() {
-        //msdMainApplication ;
-        msdMainApplication.loadTree();
-        msdMainApplication.loadAndTest();
-        System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses());
-    }
 
-
-
-    private void loadAndTest(){
-        JSONObject testingData = read_json("testing.json");
+    public void loadAndTest(){
+        JSONObject testingData = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
@@ -45,8 +34,8 @@ public class MSDMainApplication {
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
-            }//(futureConsumption-std) && quantity <= (futureConsumption+std)
-            else if(quantity == futureConsumption){
+            }
+            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
@@ -60,11 +49,13 @@ public class MSDMainApplication {
         return forecastNo;
     }
 
-    private int getForecast(int customer, String productId, int month){
+    public int getForecast(int customer, String productId, int month){
         AtomicInteger futureConsumption = new AtomicInteger();
+
         root.forEach(item->{
             if(item.getId() == customer){
                 futureConsumption.set(item.findProduct(productId, month));
+
             }
         });
 
@@ -78,12 +69,11 @@ public class MSDMainApplication {
                 item.findProduct(productId, month);
             }
         });
-        System.out.println(futureConsumption.get());
         return futureConsumption.get();
     }
 
-    private void loadTree(){
-        data = read_json("training.json");
+    public void loadTree(){
+        data = read_json("data-set.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {

@@ -3,6 +3,7 @@ package com.tansoften.msd.data;
 public class Consumption {
     private int id;
     private int quantity;
+    private int occurences;
 
     public Consumption(int id, int quantity) {
         this.id = id;

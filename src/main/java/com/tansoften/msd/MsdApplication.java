@@ -9,5 +9,8 @@ public class MsdApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsdApplication.class, args);
 		MSDMainApplication msdMainApplication = new MSDMainApplication();
+		msdMainApplication.loadTree();
+		msdMainApplication.loadAndTest();
+		System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses());
 	}
 }

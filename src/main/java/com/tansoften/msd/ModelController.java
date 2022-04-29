@@ -18,8 +18,9 @@ public class ModelController {
 //        int month = (int) product_order.get("month");
         JSONObject product_usage = new  JSONObject();
         MSDMainApplication msdMainApplication = new MSDMainApplication();
+        msdMainApplication.loadTree();
         //receiving response from the Model
-       int usage =  msdMainApplication.traverse(1,"01102301",2);
+       int usage =  msdMainApplication.getForecast(1,"14501304",1);
        product_usage.put("product_usage",usage);
         //returning response to the client
         return ResponseEntity.ok(product_usage);
