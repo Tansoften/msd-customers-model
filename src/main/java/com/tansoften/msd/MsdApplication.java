@@ -12,7 +12,7 @@ public class MsdApplication {
 		//SpringApplication.run(MsdApplication.class, args);
 		MSDMainApplication msdMainApplication = new MSDMainApplication();
 		msdMainApplication.loadTree();
-		msdMainApplication.loadAndTest();
+		msdMainApplication.loadTestingData();
 		System.out.println("Win rate: "+ModelTesting.getWinRate()*100+"\nWins: "+ModelTesting.getWins()+"\nLoses: "+ModelTesting.getLoses()+"\nNew consumptions learned: "+ModelTesting.getConsumptionsLearned());
 	}
 }
