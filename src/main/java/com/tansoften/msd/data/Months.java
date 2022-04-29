@@ -4,7 +4,6 @@ import com.tansoften.msd.ModelTesting;
 import com.tansoften.msd.STATUS;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Months {
@@ -26,10 +25,10 @@ public class Months {
 
         try{
            //return ModelTesting.getSumOfThreeNo(consumptions);
-           return ModelTesting.getRandomGhost(consumptions);
-            //return ModelTesting.getMedianConsumption(consumptions);
+           //return ModelTesting.getRandomGhost(consumptions);
+            //return ModelTesting.calculateMedianConsumption(consumptions);
             //return ModelTesting.getLatestConsumption(consumptions);
-            //return ModelTesting.getGeometricMean(consumptions);
+            return ModelTesting.calculateGeometricMean(consumptions);
           // return ModelTesting.findMean(total, consumptions.size());
         }catch (Exception exc){
             return STATUS.ZERO_DIVIDE.ordinal();

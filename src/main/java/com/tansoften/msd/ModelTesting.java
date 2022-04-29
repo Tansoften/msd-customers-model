@@ -91,7 +91,7 @@ public final class ModelTesting {
         return standardDeviation;
     }
 
-    public static int getSumOfThreeNo(ArrayList<Consumption> consumptions) {
+    public static int calculateSumOfThreeNo(ArrayList<Consumption> consumptions) {
         ArrayList<Integer> list = new ArrayList<>();
         consumptions.forEach(item -> list.add(item.getQuantity()));
         Integer[] newList = list.toArray(new Integer[0]);
@@ -113,7 +113,7 @@ public final class ModelTesting {
         return (int) Math.ceil(sum / firstNumbersCount);
     }
 
-    public static int getRandomGhost(ArrayList<Consumption> consumptions){
+    public static int calculateRandomGhost(ArrayList<Consumption> consumptions){
         ArrayList<Integer> list = new ArrayList<>();
         consumptions.forEach(item->{
             list.add(item.getQuantity());
@@ -125,7 +125,7 @@ public final class ModelTesting {
         return listArray[index-1];
     }
 
-    public static int getGeometricMean(ArrayList<Consumption> consumptions){
+    public static int calculateGeometricMean(ArrayList<Consumption> consumptions){
         ArrayList<Integer> list = new ArrayList<>();
         int sum = 0;
         double gMean = 0;
@@ -134,14 +134,14 @@ public final class ModelTesting {
         });
         Integer[] newList = list.toArray(new Integer[0]);
         for (Integer i: newList){
-            sum+=i;
+            sum*=i;
         }
         gMean = Math.pow(sum,(1/newList.length));
         setMean(gMean);
         ModelTesting.calculateStandardDeviation(consumptions);
         return (int) Math.ceil(gMean);
     }
-    public static int getLatestConsumption(ArrayList<Consumption> consumptions){
+    public static int calculateLatestConsumption(ArrayList<Consumption> consumptions){
         ArrayList<Integer> list = new ArrayList<>();
         consumptions.forEach(item->{
             list.add(item.getQuantity());
@@ -149,7 +149,7 @@ public final class ModelTesting {
         Integer[] newList = list.toArray(new Integer[0]);
         return newList[newList.length-1];
     }
-    public static int getMedianConsumption(ArrayList<Consumption> consumptions){
+    public static int calculateMedianConsumption(ArrayList<Consumption> consumptions){
         ArrayList<Integer> list = new ArrayList<>();
         int index = 0;
         int median;
@@ -178,7 +178,8 @@ public final class ModelTesting {
             index = newList.length/2;
             median = (newList[index-1] + newList[index])/2;
         }
-
+        ModelTesting.setMin(newList[newList.length-1]);
+        ModelTesting.setMax(newList[0]);
         System.out.println("\nMedian: "+median+", std: "+getStandardDeviation());
         return median;
     }
