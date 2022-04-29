@@ -55,9 +55,11 @@ public class MSDMainApplication {
 
     public int getForecast(int customer, String productId, int month){
         AtomicInteger futureConsumption = new AtomicInteger();
+
         root.forEach(item->{
             if(item.getId() == customer){
                 futureConsumption.set(item.findProduct(productId, month));
+
             }
         });
 
@@ -71,7 +73,6 @@ public class MSDMainApplication {
                 item.findProduct(productId, month);
             }
         });
-        System.out.println(futureConsumption.get());
         return futureConsumption.get();
     }
 

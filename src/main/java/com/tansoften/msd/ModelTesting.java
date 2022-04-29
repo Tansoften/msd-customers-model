@@ -126,4 +126,60 @@ public final class ModelTesting {
         int index = random.nextInt(max);
         return listArray[index];
     }
+
+    public static int getGeometricMean(ArrayList<Consumption> consumptions){
+        ArrayList<Integer> list = new ArrayList<>();
+        int sum = 0;
+        double gMean = 0;
+        consumptions.forEach(item->{
+            list.add(item.getQuantity());
+        });
+        Integer[] newList = list.toArray(new Integer[0]);
+        for (Integer i: newList){
+            sum+=i;
+        }
+        gMean = Math.pow(sum,(1/newList.length));
+        return (int) Math.ceil(gMean);
+    }
+    public static int getLatestConsumption(ArrayList<Consumption> consumptions){
+        ArrayList<Integer> list = new ArrayList<>();
+        consumptions.forEach(item->{
+            list.add(item.getQuantity());
+        });
+        Integer[] newList = list.toArray(new Integer[0]);
+        return newList[newList.length-1];
+    }
+    public static int getMedianConsumption(ArrayList<Consumption> consumptions){
+        ArrayList<Integer> list = new ArrayList<>();
+        int index = 0;
+        int median;
+        consumptions.forEach(item->{
+            list.add(item.getQuantity());
+        });
+        Integer[] newList = list.toArray(new Integer[0]);
+        for (int i = 0; i < newList.length; i++) {
+            for (int j = 1; j < newList.length; j++) {
+                int swap;
+                if (newList[j - 1] < newList[j]) {
+                    swap = newList[j - 1];
+                    newList[j - 1] = newList[j];
+                    newList[j] = swap;
+                }
+            }
+        }
+        for(Integer i: newList){
+            System.out.print(i+", ");
+        }
+        if(newList.length%2 == 1){
+            index = (newList.length + 1) / 2;
+            median = newList[index-1];
+        }
+        else {
+            index = newList.length/2;
+            median = (newList[index-1] + newList[index])/2;
+        }
+
+        System.out.println("\nMedian: "+median+", std: "+getStandardDeviation());
+        return median;
+    }
 }
