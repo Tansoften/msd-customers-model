@@ -22,13 +22,12 @@ public class Months {
             return null;
         })).toList();
 
-
-
         try{
            ModelTesting.calculateStandardDeviation(consumptions);
            //return ModelTesting.getSumOfThreeNo(consumptions);
            //return ModelTesting.getRandomGhost(consumptions);
            return ModelTesting.findMean(total, consumptions.size());
+            ///return ModelTesting.findHarmonicMean(consumptions);
         }catch (Exception exc){
             return STATUS.ZERO_DIVIDE.ordinal();
         }

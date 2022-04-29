@@ -18,7 +18,7 @@ public class MSDMainApplication {
     private JSONObject data;
 
     public void loadAndTest(){
-        JSONObject testingData = read_json("data-set.json");
+        JSONObject testingData = read_json("testing.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
         for(int index = 0; index < dataArray.size(); ++index){
@@ -29,17 +29,21 @@ public class MSDMainApplication {
             int quantity = Integer.parseInt((String) data.get("quantity"));
 
             Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
-            int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
+            int futureConsumption = testForecast(customerId , productId.trim(), Integer.parseInt((String) data.get("month")) );
             Double std = ModelTesting.getStandardDeviation();
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
-                System.out.println("skipped");
+                feedConsumption(customerId, productId.trim(), date, quantity);
+                ModelTesting.learnNewConsumption();
+                System.out.println("Learned consumption of product "+productId);
             }
             else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
                 feedConsumption(customerId, productId, date, quantity);
+                ModelTesting.learnNewConsumption();
+                System.out.println("Learned consumption of product "+productId);
             }
         }
     }
@@ -49,7 +53,7 @@ public class MSDMainApplication {
         return forecastNo;
     }
 
-    private int getForecast(int customer, String productId, int month){
+    public int getForecast(int customer, String productId, int month){
         AtomicInteger futureConsumption = new AtomicInteger();
         root.forEach(item->{
             if(item.getId() == customer){
@@ -72,7 +76,7 @@ public class MSDMainApplication {
     }
 
     public void loadTree(){
-        data = read_json("data-set.json");
+        data = read_json("training.json");
         JSONArray dataArray = (JSONArray) data.get("data");
 
          for(int index=0; index < dataArray.size(); ++index) {
@@ -83,7 +87,7 @@ public class MSDMainApplication {
 
              Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
 
-             feedConsumption(customerId, productId, date, quantity);
+             feedConsumption(customerId, productId.trim(), date, quantity);
         }
     }
 

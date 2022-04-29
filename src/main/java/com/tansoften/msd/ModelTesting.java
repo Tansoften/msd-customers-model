@@ -10,13 +10,25 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class ModelTesting {
     private static int wins = 0;
     private static int loses = 0;
+    private static int consumptionsLearned = 0;
     private static Double winRate;
-    private static ArrayList<Occurences> mode;
     private static double standardDeviation = 0.0;
 
-//    public static int findMode(){
-//
-//    }
+    public static int findHarmonicMean(ArrayList<Consumption> consumptions){
+        int mean=0;
+        AtomicReference<Double> totalReciprocal = new AtomicReference<>();
+        ArrayList<Consumption> consumptionsCopy = (ArrayList<Consumption>) consumptions.clone();
+
+        consumptionsCopy.stream().map(itemConsumption->{
+            Double reciprocal = Math.pow(Double.valueOf(itemConsumption.getQuantity()), -1.0);
+            totalReciprocal.getAndSet(reciprocal);
+            return null;
+        }).toList();
+
+        mean = (int) ((consumptionsCopy.size())/totalReciprocal.get());
+
+        return mean;
+    }
 
     public static int findMean(AtomicInteger total, int size) {
         try {
@@ -26,6 +38,12 @@ public final class ModelTesting {
             return STATUS.ZERO_DIVIDE.ordinal();
         }
     }
+
+    public static void learnNewConsumption(){
+        ++consumptionsLearned;
+    }
+
+    public static int getConsumptionsLearned(){return consumptionsLearned;}
 
     public static void addWins() {
         ++wins;
