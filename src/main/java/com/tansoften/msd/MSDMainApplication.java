@@ -35,7 +35,7 @@ public class MSDMainApplication {
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 System.out.println("skipped");
             }
-            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
+            else if(quantity >= (futureConsumption-ModelTesting.getMedian_margin()) && quantity <= (futureConsumption+ModelTesting.getMedian_margin())){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
