@@ -31,19 +31,15 @@ public final class ModelTesting {
     }
     private static double mean = 0;
 
-    private static int max = 0;
+    private static double median_margin = 0;
 
-    private  static int min = 0;
-    public static void setMax(int max) {
-        ModelTesting.max = max;
+    public static void setMedian_margin(double median_margin) {
+        ModelTesting.median_margin = median_margin;
     }
 
-    public static void setMin(int min) {
-        ModelTesting.min = min;
+    public static double getMedian_margin() {
+        return median_margin;
     }
-
-
-
 
     public static void setMean(double mean) {
         ModelTesting.mean = mean;
@@ -185,9 +181,6 @@ public final class ModelTesting {
                 }
             }
         }
-        for(Integer i: newList){
-            System.out.print(i+", ");
-        }
         if(newList.length%2 == 1){
             index = (newList.length + 1) / 2;
             median = newList[index-1];
@@ -196,9 +189,7 @@ public final class ModelTesting {
             index = newList.length/2;
             median = (newList[index-1] + newList[index])/2;
         }
-        ModelTesting.setMin(newList[newList.length-1]);
-        ModelTesting.setMax(newList[0]);
-        System.out.println("\nMedian: "+median+", std: "+getStandardDeviation());
+        setMedian_margin((newList[0] - newList[newList.length-1])/2);
         return median;
     }
 }

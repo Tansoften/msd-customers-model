@@ -41,7 +41,7 @@ public class MSDMainApplication {
                 //ModelTesting.learnNewConsumption();
                 System.out.println("Learned consumption of product "+productId);
             }
-            else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
+            else if(quantity >= (futureConsumption-ModelTesting.getMedian_margin()) && quantity <= (futureConsumption+ModelTesting.getMedian_margin())){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();

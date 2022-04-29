@@ -24,9 +24,9 @@ public class Months {
         try{
            //return ModelTesting.getSumOfThreeNo(consumptions);
            //return ModelTesting.getRandomGhost(consumptions);
-            //return ModelTesting.calculateMedianConsumption(consumptions);
+            return ModelTesting.calculateMedianConsumption(consumptions);
             //return ModelTesting.getLatestConsumption(consumptions);
-            return ModelTesting.calculateGeometricMean(consumptions);
+            //return ModelTesting.calculateGeometricMean(consumptions);
           // return ModelTesting.findMean(total, consumptions.size());
         }catch (Exception exc){
             return STATUS.ZERO_DIVIDE.ordinal();
