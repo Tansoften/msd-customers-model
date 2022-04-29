@@ -38,7 +38,7 @@ public class MSDMainApplication {
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
                 feedConsumption(customerId, productId.trim(), date, quantity);
-                ModelTesting.learnNewConsumption();
+                //ModelTesting.learnNewConsumption();
                 System.out.println("Learned consumption of product "+productId);
             }
             else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
@@ -46,7 +46,7 @@ public class MSDMainApplication {
             }else{
                 ModelTesting.addLoses();
                 feedConsumption(customerId, productId, date, quantity);
-                ModelTesting.learnNewConsumption();
+                //ModelTesting.learnNewConsumption();
                 System.out.println("Learned consumption of product "+productId);
             }
         }
