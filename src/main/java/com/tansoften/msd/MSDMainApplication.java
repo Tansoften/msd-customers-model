@@ -37,19 +37,21 @@ public class MSDMainApplication {
             Double std = ModelTesting.getStandardDeviation();
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
-                feedConsumption(customerId, productId.trim(), date, quantity);
-                //ModelTesting.learnNewConsumption();
-                System.out.println("Learned consumption of product "+productId);
+                //learnNewConsumption(customerId, productId, date, quantity);
             }
             else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
-                feedConsumption(customerId, productId, date, quantity);
-                //ModelTesting.learnNewConsumption();
-                System.out.println("Learned consumption of product "+productId);
+                learnNewConsumption(customerId, productId, date, quantity);
             }
         }
+    }
+
+    private void learnNewConsumption(int customerId, String productId, Date date, int quantity){
+        feedConsumption(customerId, productId, date, quantity);
+        ModelTesting.learnNewConsumption();
+        System.out.println("Learned consumption of product "+productId);
     }
 
     public int getForecast(int customer, String productId, int month){

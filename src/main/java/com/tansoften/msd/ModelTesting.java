@@ -49,10 +49,17 @@ public final class ModelTesting {
         return mean;
     }
 
-    public static int findMean(AtomicInteger total, int size) {
+    public static int calculateArithmeticMean(ArrayList<Consumption> consumptions) {
         try {
-            int mean = total.get() / size;
+            AtomicInteger total= new AtomicInteger();
+            consumptions.stream().map((consumption -> {
+                total.addAndGet(consumption.getQuantity());
+                return null;
+            })).toList();
+
+            int mean = total.get() / consumptions.size();
             setMean(mean);
+            calculateStandardDeviation(consumptions);
             return mean;
         } catch ( Exception exc ) {
             return STATUS.ZERO_DIVIDE.ordinal();
@@ -141,16 +148,16 @@ public final class ModelTesting {
 
     public static int calculateGeometricMean(ArrayList<Consumption> consumptions){
         ArrayList<Integer> list = new ArrayList<>();
-        int sum = 0;
+        int product = 1;
         double gMean = 0;
         consumptions.forEach(item->{
             list.add(item.getQuantity());
         });
         Integer[] newList = list.toArray(new Integer[0]);
         for (Integer i: newList){
-            sum*=i;
+            product*=i;
         }
-        gMean = Math.pow(sum,(1/newList.length));
+        gMean = Math.pow(product,(1/newList.length));
         setMean(gMean);
         ModelTesting.calculateStandardDeviation(consumptions);
         return (int) Math.ceil(gMean);
