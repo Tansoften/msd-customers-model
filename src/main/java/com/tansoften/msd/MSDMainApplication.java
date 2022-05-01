@@ -17,10 +17,14 @@ public class MSDMainApplication {
     private ArrayList<Customer> root = new ArrayList<>();
     private JSONObject data;
 
-    public void loadAndTest(){
+    public void loadTestingData(){
         JSONObject testingData = read_json("testing.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
 
+        testForecast(dataArray);
+    }
+
+    private void testForecast(JSONArray dataArray){
         for(int index = 0; index < dataArray.size(); ++index){
             JSONObject data = (JSONObject) dataArray.get(index);
 
@@ -29,24 +33,23 @@ public class MSDMainApplication {
             int quantity = Integer.parseInt((String) data.get("quantity"));
 
             Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
-            int futureConsumption = testForecast(Integer.parseInt((String) data.get("customer_id")) , String.valueOf(data.get("product_id")), Integer.parseInt((String) data.get("month")) );
+            int futureConsumption = getForecast(customerId , productId.trim(), Integer.parseInt((String) data.get("month")) );
             Double std = ModelTesting.getStandardDeviation();
 
             if(futureConsumption == STATUS.ZERO_DIVIDE.ordinal()){
-                System.out.println("skipped");
+                feedConsumption(customerId, productId.trim(), date, quantity);
+                //ModelTesting.learnNewConsumption();
+                System.out.println("Learned consumption of product "+productId);
             }
             else if(quantity >= (futureConsumption-std) && quantity <= (futureConsumption+std)){
                 ModelTesting.addWins();
             }else{
                 ModelTesting.addLoses();
                 feedConsumption(customerId, productId, date, quantity);
+                //ModelTesting.learnNewConsumption();
+                System.out.println("Learned consumption of product "+productId);
             }
         }
-    }
-
-    private int testForecast(int customerId, String productId, int month){
-        int forecastNo = getForecast(customerId, productId, month);
-        return forecastNo;
     }
 
     public int getForecast(int customer, String productId, int month){
@@ -55,20 +58,9 @@ public class MSDMainApplication {
         root.forEach(item->{
             if(item.getId() == customer){
                 futureConsumption.set(item.findProduct(productId, month));
-
             }
         });
 
-        return futureConsumption.get();
-    }
-
-    public int traverse(int customer, String productId, int month){
-        AtomicInteger futureConsumption = new AtomicInteger();
-        root.forEach(item->{
-            if(item.getId() == customer){
-                item.findProduct(productId, month);
-            }
-        });
         return futureConsumption.get();
     }
 
@@ -84,7 +76,7 @@ public class MSDMainApplication {
 
              Date date = new Date(Integer.parseInt((String) data.get("year")), Integer.parseInt((String) data.get("month")));
 
-             feedConsumption(customerId, productId, date, quantity);
+             feedConsumption(customerId, productId.trim(), date, quantity);
         }
     }
 

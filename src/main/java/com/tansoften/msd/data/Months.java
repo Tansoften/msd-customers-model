@@ -21,8 +21,6 @@ public class Months {
             return null;
         })).toList();
 
-
-
         try{
            //return ModelTesting.getSumOfThreeNo(consumptions);
            //return ModelTesting.getRandomGhost(consumptions);
