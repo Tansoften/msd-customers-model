@@ -157,7 +157,7 @@ public final class ModelTesting {
         for (Integer i: newList){
             product*=i;
         }
-        gMean = Math.pow(product,(1/newList.length));
+        gMean = Math.pow(product,(1/newList.length));System.out.println((1/newList.length));
         setMean(gMean);
         ModelTesting.calculateStandardDeviation(consumptions);
         return (int) Math.ceil(gMean);
