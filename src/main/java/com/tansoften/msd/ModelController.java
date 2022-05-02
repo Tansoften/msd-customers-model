@@ -9,13 +9,8 @@ import java.util.Map;
 @RestController
 @CrossOrigin("http://192.168.43.207:8080/")
 public class ModelController {
-    //@RequestMapping(value = "/model/product_usage", method = RequestMethod.POST)
-    //public ResponseEntity<?> getConsumption(@RequestBody Map<String, Object> product_order)
     @RequestMapping(value="model/consumption/customer/{customer_id}/product/{product_id}/month/{month}", method=RequestMethod.GET)
     public ResponseEntity<?> getConsumption(@PathVariable("customer_id") int customerId, @PathVariable("product_id") String productId, @PathVariable("month") int month){
-//        int customer = (int) product_order.get("customer_id");
-//        String product = (String) product_order.get("product_id");
-//        int month = (int) product_order.get("month");
         JSONObject product_usage = new  JSONObject();
 
         //receiving response from the Model

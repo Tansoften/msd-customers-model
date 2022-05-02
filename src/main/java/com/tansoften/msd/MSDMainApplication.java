@@ -85,11 +85,11 @@ public class MSDMainApplication {
                 updatingData.put("id", consumption.get("id"));
                 updatingData.put("quantity", avgConsumption);
                 JSONObject response = BackendService.API("PUT", "/update-consumption-quantity", updatingData);
-                if((boolean) response.get("hasUpdated")){
-                    System.out.println("Consumption of id "+consumption.get("id")+" was updated successfully.");
-                }else{
-                    System.out.println((String) response.get("message"));
-                }
+//                if((boolean) response.get("hasUpdated")){
+//                    System.out.println("Consumption of id "+consumption.get("id")+" was updated successfully.");
+//                }else{
+//                    System.out.println((String) response.get("message"));
+//                }
             }
         }
         System.out.println("Done cleaning data.");
