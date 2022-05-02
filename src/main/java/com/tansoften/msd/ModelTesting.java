@@ -98,14 +98,34 @@ public final class ModelTesting {
         return winRate;
     }
 
-    public static void calculateStandardDeviation(ArrayList<Consumption> list) {
-        AtomicReference<Double> variance = new AtomicReference<>(0.0);
-        list.forEach(item -> {
-            double dif = item.getQuantity() - getMean();
-            variance.set(variance.get() + Math.pow(dif, 2.0));
+    private static void calculateGSD(ArrayList<Consumption> consumptions){
+        AtomicReference<Double> lnRationSquaredSum = new AtomicReference<>(0.0);
+
+        consumptions.forEach(consumption -> {
+            double lnRation = ln(consumption.getQuantity()/getMean());
+            lnRationSquaredSum.set(lnRationSquaredSum.get()+Math.pow(lnRation, 2));
         });
 
-        standardDeviation = Math.sqrt(variance.get() / list.size());
+        double variance = lnRationSquaredSum.get()/consumptions.size();
+
+        standardDeviation = Math.exp(Math.sqrt(variance));
+    }
+
+    private static double ln(Double number){
+        double ln = (-Math.log(1-number))/number;
+        return ln;
+    }
+
+    public static void calculateStandardDeviation(ArrayList<Consumption> list) {
+        AtomicReference<Double> diffOfNumAndMeanSquared = new AtomicReference<>(0.0);
+        list.forEach(item -> {
+            double dif = item.getQuantity() - getMean();
+            diffOfNumAndMeanSquared.set(diffOfNumAndMeanSquared.get() + Math.pow(dif, 2.0));
+        });
+
+        double variance = diffOfNumAndMeanSquared.get() / list.size();
+
+        standardDeviation = Math.sqrt(variance);
     }
 
     public static double getStandardDeviation() {
@@ -157,9 +177,9 @@ public final class ModelTesting {
         for (Integer i: newList){
             product*=i;
         }
-        gMean = Math.pow(product,(1/newList.length));System.out.println((1/newList.length));
+        gMean = Math.pow(product,(1/newList.length));
         setMean(gMean);
-        ModelTesting.calculateStandardDeviation(consumptions);
+        ModelTesting.calculateGSD(consumptions);
         return (int) Math.ceil(gMean);
     }
     public static int calculateLatestConsumption(ArrayList<Consumption> consumptions){

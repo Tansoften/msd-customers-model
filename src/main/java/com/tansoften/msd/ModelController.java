@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:8080/")
+@CrossOrigin("http://192.168.43.207:8080/")
 public class ModelController {
     //@RequestMapping(value = "/model/product_usage", method = RequestMethod.POST)
     //public ResponseEntity<?> getConsumption(@RequestBody Map<String, Object> product_order)
-    @RequestMapping(value="model/product_usage", method=RequestMethod.GET)
-    public ResponseEntity<?> getConsumption(@RequestParam("customer_id") int customerId, @RequestParam("product_id") String productId, @RequestParam("month") int month){
+    @RequestMapping(value="model/consumption/customer/{customer_id}/product/{product_id}/month/{month}", method=RequestMethod.GET)
+    public ResponseEntity<?> getConsumption(@PathVariable("customer_id") int customerId, @PathVariable("product_id") String productId, @PathVariable("month") int month){
 //        int customer = (int) product_order.get("customer_id");
 //        String product = (String) product_order.get("product_id");
 //        int month = (int) product_order.get("month");
@@ -20,7 +20,14 @@ public class ModelController {
 
         //receiving response from the Model
        int usage =  MSDMainApplication.getForecast(customerId,productId.trim(),month);
+       int standardDeviation = (int) ModelTesting.getStandardDeviation();
+       int min = usage-standardDeviation;
+       int max = usage+standardDeviation;
+
        product_usage.put("product_usage",usage);
+       product_usage.put("standard_deviation", standardDeviation);
+       product_usage.put("min", (min < 0)?0:min);
+       product_usage.put("max", max);
         //returning response to the client
         return ResponseEntity.ok(product_usage);
     }

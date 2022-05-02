@@ -16,14 +16,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MSDMainApplication {
     private static final ArrayList<Customer> root = new ArrayList<>();
 
-    public void loadTestingData(){
-        JSONObject testingData = read_json("testing.json");
+    public void loadValidatingData(){
+        System.out.println("Fetching validating data...");
+        JSONObject testingData = read_json("validating.json");
         JSONArray dataArray = (JSONArray) testingData.get("data");
+        System.out.println("Done fetching validating data.");
 
-        testForecast(dataArray);
+        validateForecast(dataArray);
     }
 
-    private void testForecast(JSONArray dataArray){
+    private void validateForecast(JSONArray dataArray){
         System.out.println("Testing model...");
         for (Object consumption : dataArray) {
             JSONObject data = (JSONObject) consumption;
@@ -37,7 +39,8 @@ public class MSDMainApplication {
             double std = ModelTesting.getStandardDeviation();
 
             if (futureConsumption == STATUS.ZERO_DIVIDE.ordinal()) {
-                //learnNewConsumption(customerId, productId, date, quantity);
+                //System.out.println("Product with id "+productId.trim()+" was never used before.");
+                learnNewConsumption(customerId, productId, date, quantity);
             } else if (quantity >= (futureConsumption - std) && quantity <= (futureConsumption + std)) {
                 ModelTesting.addWins();
             } else {
@@ -92,10 +95,14 @@ public class MSDMainApplication {
         System.out.println("Done cleaning data.");
     }
 
-    public void loadTree() throws IOException, InterruptedException {
-        JSONObject trainingData = read_json("data-set.json");
+    public void loadTree() throws IOException{
+        System.out.println("Fetching training data...");
+        JSONObject trainingData = read_json("training.json");
         JSONArray dataArray = (JSONArray) trainingData.get("data");
+        System.out.println("Done fetching training data.");
+
         System.out.println("Initializing model...");
+
         for (Object consumption : dataArray) {
             JSONObject data = (JSONObject) consumption;
             int customerId = Integer.parseInt((String) data.get("customer_id"));
@@ -108,7 +115,7 @@ public class MSDMainApplication {
         }
         System.out.println("Model was initialized successfully.");
 
-        cleanData(dataArray);
+        //cleanData(dataArray);
     }
 
     private void feedConsumption(int customerId, String productId, Date date, int quantity){
