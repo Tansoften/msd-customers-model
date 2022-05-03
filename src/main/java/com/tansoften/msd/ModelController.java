@@ -4,8 +4,6 @@ import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @CrossOrigin("http://192.168.43.207:8080/")
 public class ModelController {
@@ -14,7 +12,7 @@ public class ModelController {
         JSONObject product_usage = new  JSONObject();
 
         //receiving response from the Model
-       int usage =  MSDMainApplication.getForecast(customerId,productId.trim(),month);
+       int usage =  Model.getForecast(customerId,productId.trim(),month);
        int standardDeviation = (int) ModelTesting.getStandardDeviation();
        int min = usage-standardDeviation;
        int max = usage+standardDeviation;
