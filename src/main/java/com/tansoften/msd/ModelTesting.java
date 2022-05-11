@@ -80,6 +80,11 @@ public final class ModelTesting {
         ++loses;
     }
 
+    public static void resetWinsLoses(){
+        wins    = 0;
+        loses   = 0;
+    }
+
     public static int getWins() {
         return wins;
     }

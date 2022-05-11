@@ -45,7 +45,15 @@ public abstract class Server {
 						}
 					}
 					case "validate-model" -> Server.startModelValidation();
-					case "close" -> isRunning = false;
+                    case "restart-count"-> ModelController.resetCounters();
+                    case "change-rate "-> {
+                        int rate = readInput.nextInt();
+						ModelController.changeRate(rate);
+                    }
+					case "close" -> {
+						isRunning = false;
+						//SpringApplication.exit();
+					}
 					default -> System.out.println("Didn't understand your command, type help to learn.");
 				}
 			}
@@ -67,11 +75,11 @@ public abstract class Server {
 		}else {
 			model.loadValidatingData();
 			System.out.println(
-					"Win rate: "+ModelTesting.getWinRate()*100
-							+"\nWins: "+ModelTesting.getWins()
-							+"\nLoses: "+ModelTesting.getLoses()
-							+"\nNew consumptions learned: "
-							+ModelTesting.getConsumptionsLearned()
+				"Win rate: "+ModelTesting.getWinRate()*100
+				+"\nWins: "+ModelTesting.getWins()
+				+"\nLoses: "+ModelTesting.getLoses()
+				+"\nNew consumptions learned: "
+				+ModelTesting.getConsumptionsLearned()
 			);
 		}
 	}

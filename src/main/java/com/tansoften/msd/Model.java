@@ -28,6 +28,7 @@ public class Model {
     }
 
     private void validateForecast(JSONArray dataArray){
+        ModelTesting.resetWinsLoses();
         System.out.println("Testing model...");
         for (Object consumption : dataArray) {
             JSONObject data = (JSONObject) consumption;
