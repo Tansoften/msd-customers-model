@@ -12,6 +12,28 @@ public class ModelController {
     //public static void resetCounters(){count=0;}
     public static void changeRate(int _waitTime){waitTime=_waitTime;}
 
+    @RequestMapping(value="model/consumptions/hospital/{hospital_id}/product/{product_id}/month/{month}", method=RequestMethod.GET)
+    public ResponseEntity<?> getConsumptions(@PathVariable("hospital_id") int hospitalId, @PathVariable("product_id") String productId, @PathVariable("month") int month){
+        JSONObject consumptionsObj = new  JSONObject();
+
+        Analysis.calcConsumptions(hospitalId, productId.trim(), month);
+        int consumptions = Analysis.getTotalConsumptions();
+        consumptionsObj.put("consumptions", consumptions);
+
+        return ResponseEntity.ok(consumptionsObj);
+    }
+
+    @RequestMapping(value="model/hospital/{hospital_id}/consumptions/month/{month}", method=RequestMethod.GET)
+    public ResponseEntity<?> getConsumptions(@PathVariable("hospital_id") int hospitalId, @PathVariable("month") int month){
+        JSONObject consumptionsObj = new  JSONObject();
+
+        Analysis.calcConsumptions(hospitalId, month);
+        int consumptions = Analysis.getTotalConsumptions();
+        consumptionsObj.put("consumptions", consumptions);
+
+        return ResponseEntity.ok(consumptionsObj);
+    }
+
     @RequestMapping(value="model/hospitals/consumptions/month/{month}", method=RequestMethod.GET)
     public ResponseEntity<?> getConsumptions(@PathVariable("month") int month){
         JSONObject consumptionsObj = new  JSONObject();
