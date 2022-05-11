@@ -4,6 +4,7 @@ import com.tansoften.msd.ModelTesting;
 import com.tansoften.msd.STATUS;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Months {
     private  int id;
@@ -11,6 +12,15 @@ public class Months {
 
     public Months(int id) {
         this.id = id;
+    }
+
+    public int getTotalConsumptions(){
+        AtomicInteger total = new AtomicInteger(0);
+
+        consumptions.forEach(consumption->{
+            total.addAndGet(consumption.getQuantity());
+        });
+        return total.get();
     }
 
     public int determineConsumption(){

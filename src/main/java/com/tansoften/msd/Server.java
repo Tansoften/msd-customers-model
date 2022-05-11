@@ -45,8 +45,9 @@ public abstract class Server {
 						}
 					}
 					case "validate-model" -> Server.startModelValidation();
-                    case "restart-count"-> ModelController.resetCounters();
+                    //case "restart-count"-> ModelController.resetCounters();
                     case "change-rate "-> {
+						System.out.print("Enter time in milliseconds:");
                         int rate = readInput.nextInt();
 						ModelController.changeRate(rate);
                     }

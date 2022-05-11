@@ -15,7 +15,55 @@ public class Product {
    private Months november  = new Months(11);
    private Months december  = new Months(12);
 
-   public int findMonth(int mon){
+    public Months getJanuary() {
+        return january;
+    }
+
+    public Months getFebruary() {
+        return february;
+    }
+
+    public Months getMarch() {
+        return march;
+    }
+
+    public Months getApril() {
+        return april;
+    }
+
+    public Months getMay() {
+        return may;
+    }
+
+    public Months getJune() {
+        return june;
+    }
+
+    public Months getJuly() {
+        return july;
+    }
+
+    public Months getAugust() {
+        return august;
+    }
+
+    public Months getSeptember() {
+        return september;
+    }
+
+    public Months getOctober() {
+        return october;
+    }
+
+    public Months getNovember() {
+        return november;
+    }
+
+    public Months getDecember() {
+        return december;
+    }
+
+    public int findMonth(int mon){
        int quantity = 0;
        switch (mon){
            case 1   -> quantity = january.determineConsumption();

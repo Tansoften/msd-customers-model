@@ -8,7 +8,11 @@ public class Customer {
    private int id;
    private ArrayList<Product> productsList = new ArrayList<>();
 
-   public int findProduct(String pid, int mon){
+    public ArrayList<Product> getProductsList() {
+        return productsList;
+    }
+
+    public int findProduct(String pid, int mon){
        AtomicInteger futureConsumption = new AtomicInteger();
        productsList.forEach(item->{
            if(item.getId().equals(pid)){
